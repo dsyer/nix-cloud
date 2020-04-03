@@ -2,9 +2,7 @@
 
 with pkgs;
 
-let
-
-in buildEnv {
+buildEnv {
   name = "cloud";
   paths = [
       terraform
