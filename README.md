@@ -24,14 +24,24 @@ Create a VM and log in (you will need to replace the GCP project ID):
 
 ```
 $ terraform apply -auto-approve
+Apply complete! Resources: 0 added, 0 changed, 0 destroyed.
+
+Outputs:
+
+instance_ip = 35.197.203.4
+```
+
+You can verify with `gcloud` that the instance is running:
+
+```
 $ gcloud compute instances list
 NAME        ZONE            MACHINE_TYPE                 PREEMPTIBLE  INTERNAL_IP  EXTERNAL_IP  STATUS
 test        europe-west2-c  n1-standard-1                             10.154.0.8   35.197.203.4  RUNNING
-$ ssh -i ~/.ssh/google_compute_engine 35.197.203.4
+$ ssh -i ~/.ssh/google_compute_engine `terraform output instance_ip`
 dsyer@test$ 
 ```
 
-Unfortunately you can't use Terrafrom to [stop an instance](https://github.com/terraform-providers/terraform-provider-aws/issues/22) so you have to go to `gcloud`:
+Unfortunately you can't use Terrafrom to [stop an instance](https://github.com/terraform-providers/terraform-provider-aws/issues/22) so you have to go to `gcloud` to do that:
 
 ```
 $ gcloud compute instances stop --zone europe-west2-c test
