@@ -1,5 +1,8 @@
-resource "google_compute_instance" "default" {
+provider "google" {
   project      = "cf-sandbox-dsyer"
+}
+
+resource "google_compute_instance" "default" {
   name         = "test"
   machine_type = "n1-standard-1"
   zone         = "europe-west2-c"
