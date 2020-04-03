@@ -2,7 +2,7 @@ resource "google_compute_instance" "default" {
   project      = "cf-sandbox-dsyer"
   name         = "test"
   machine_type = "n1-standard-1"
-  zone         = "us-central1-a"
+  zone         = "europe-west2-c"
 
   boot_disk {
     initialize_params {
