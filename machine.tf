@@ -1,5 +1,5 @@
 variable "user" {
-  description = "Username of user on remote. Usually the same as the project owner."
+  description = "Username of user on remote. Usually `gcloud config list --format 'value(core.account)' | cut -d '@' -f 1`."
 }
 
 variable "project" {
