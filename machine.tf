@@ -7,11 +7,11 @@ variable "project" {
 }
 
 provider "google" {
-  project      = "var.project"
+  project      = var.project
 }
 
 resource "random_id" "instance_id" {
- byte_length = 8
+  byte_length = 8
 }
 
 resource "google_compute_instance" "default" {
@@ -36,10 +36,14 @@ resource "google_compute_instance" "default" {
       // Ephemeral IP
     }
   }
+
+  provisioner "local-exec" {
+    command = "scripts/bootstrap.sh ${google_compute_instance.default.network_interface.0.access_config.0.nat_ip}"
+  }
 }
 
 output "instance_ip" {
-    value = "${google_compute_instance.default.network_interface[0].access_config[0].nat_ip}"
+    value = "${google_compute_instance.default.network_interface.0.access_config.0.nat_ip}"
 }
 
 output "instance_name" {
