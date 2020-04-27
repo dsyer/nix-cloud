@@ -1,13 +1,25 @@
+# Jump Box on GCP
+
+## Pre-requisites
+
+You need to:
+
+- get `terraform` and `gcloud` (or `nix-shell` so you can install it)
+- authenticate with `gcloud` and set up a project if you don't have one
+- create an SSH identity file (RSA private key) `~/.ssh/google_compute_engine` if you don't have one
+
+## Create a VM and Log in
+
 Create local environment (if you don't have `terraform` already):
 
 ```
 $ nix-shell
-       _                 _   
- _ ___| | ___  _   _  __| |_ 
+       _                 _
+ _ ___| | ___  _   _  __| |_
 (_) __| |/ _ \| | | |/ _` (_)
- | (__| | (_) | |_| | (_| |_ 
+ | (__| | (_) | |_| | (_| |_
 (_)___|_|\___/ \__,_|\__,_(_)
-                             
+
 
 Terraform v0.12.23
 ...
@@ -39,17 +51,19 @@ instance_ip = 35.197.203.4
 instance_name = test-719c6...
 ```
 
-You can verify with `gcloud` that the instance is running:
+You can verify with `gcloud` that the instance is running, and then SSH in:
 
 ```
 $ gcloud compute instances list
 NAME                 ZONE            MACHINE_TYPE                 PREEMPTIBLE  INTERNAL_IP  EXTERNAL_IP   STATUS
 test-719c6...        europe-west2-c  n1-standard-1                             10.154.0.8   35.197.203.4  RUNNING
 $ ssh -i ~/.ssh/google_compute_engine `terraform output instance_ip`
-dsyer@test$ 
+dsyer@test:~$
 ```
 
-Unfortunately you can't use Terrafrom to [stop an instance](https://github.com/terraform-providers/terraform-provider-aws/issues/22) so you have to go to `gcloud` to do that:
+## Tear Down
+
+Unfortunately you can't use Terraform to [stop an instance](https://github.com/terraform-providers/terraform-provider-aws/issues/22) so you have to go to `gcloud` to do that:
 
 ```
 $ gcloud compute instances stop --zone europe-west2-c test

@@ -25,10 +25,6 @@ resource "google_compute_instance" "default" {
     }
   }
 
-  metadata = {
-    startup-script = "curl https://nixos.org/nix/install | sudo -i -u ${var.user}"
-  }
-
   network_interface {
     network = "default"
 

@@ -14,3 +14,4 @@ ssh -o StrictHostKeyChecking=no -i ~/.ssh/google_compute_engine $remote test -e 
 
 rsync -e 'ssh -o StrictHostKeyChecking=no -i ~/.ssh/google_compute_engine' --filter=':- .gitignore' -a -P . $remote:~/nix-cloud
 
+ssh -o StrictHostKeyChecking=no -i ~/.ssh/google_compute_engine $remote ~/nix-cloud/scripts/init.sh
