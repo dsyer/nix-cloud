@@ -85,16 +85,26 @@ The instance was initialized with `Nix`. So you can add tools and packages decla
 ```
 dsyer@test$ nix-env -q
 nix-2.3.3
+user-packages
 ```
 
-E.g. add the [hub CLI](https://hub.github.com/) (`git` is already included in the GCP Ubuntu images):
+E.g. add the [cowsay CLI](https://en.wikipedia.org/wiki/Cowsay):
 
 ```
-$ nix-env -i hub
+$ nix-env -i cowsay
 $ nix-env -q
-hub-2.14.2
+cowsay-1.12.3
 nix-2.3.3
-$ hub version
-git version 2.17.1
-hub version 2.14.2
+user-packages
+$ cowsay hello
+ _______
+< hello >
+ -------
+        \   ^__^
+         \  (oo)\_______
+            (__)\       )\/\
+                ||----w |
+                ||     ||
 ```
+
+The `user-packages` are configured in `.config/nixpkgs/config.nix` and installed when the VM is initialized. You can add your favourite stuff there and update with `nix-env -i user-packages`.
