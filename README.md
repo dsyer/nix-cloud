@@ -66,7 +66,7 @@ dsyer@test:~$
 Unfortunately you can't use Terraform to [stop an instance](https://github.com/terraform-providers/terraform-provider-aws/issues/22) so you have to go to `gcloud` to do that:
 
 ```
-$ gcloud compute instances stop --zone europe-west2-c test
+$ gcloud compute instances stop --zone europe-west2-c `terraform output instance_name`
 Stopping instance(s) test...
 ```
 

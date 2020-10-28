@@ -7,6 +7,7 @@ with (import <nixpkgs> { }); {
         paths = [
           dive
           docker-compose
+          docker-credential-gcr
           envsubst
           git
           gitAndTools.hub
