@@ -5,7 +5,7 @@
 You need to:
 
 - get `terraform` and `gcloud` (or `nix-shell` so you can install it)
-- authenticate with `gcloud` and set up a project if you don't have one
+- authenticate with `gcloud` (`gcloud auth application-default login`) and set up a project if you don't have one
 - create an SSH identity file (RSA private key) `~/.ssh/google_compute_engine` if you don't have one
 
 ## Create a VM and Log in
@@ -32,7 +32,7 @@ project = "cf-sandbox-dsyer"
 user = "dsyer"
 ```
 
-Initialize and make sure the configuration is clean:
+Initialize and make sure the configuration is clean (maybe first `rm -rf .terraform* terraform.tfstate*` if you have some old state lying around):
 
 ```
 $ terraform init
@@ -57,7 +57,7 @@ You can verify with `gcloud` that the instance is running, and then SSH in:
 $ gcloud compute instances list
 NAME                 ZONE            MACHINE_TYPE                 PREEMPTIBLE  INTERNAL_IP  EXTERNAL_IP   STATUS
 test-719c6...        europe-west2-c  n1-standard-1                             10.154.0.8   35.197.203.4  RUNNING
-$ ssh -i ~/.ssh/google_compute_engine `terraform output instance_ip`
+$ ssh -i ~/.ssh/google_compute_engine $(terraform output instance_ip | sed -e 's/"//g')
 dsyer@test:~$
 ```
 

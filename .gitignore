@@ -1,6 +1,8 @@
 *.tfstate*
 .terraform/
 terraform.tfvars
+.terraform.lock.hcl
 *.raw
 *.qcow
 *.iso
+.vscode/

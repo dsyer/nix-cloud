@@ -16,13 +16,13 @@ resource "random_id" "instance_id" {
 
 resource "google_compute_instance" "default" {
   name         = "test-${random_id.instance_id.hex}"
-  machine_type = "n1-standard-1"
+  machine_type = "c3-standard-8"
   zone         = "europe-west2-c"
 
   boot_disk {
     initialize_params {
-      image = "ubuntu-os-cloud/ubuntu-1804-lts"
-      size = 20
+      image = "ubuntu-os-cloud/ubuntu-2204-lts"
+      size = 100
     }
   }
 
