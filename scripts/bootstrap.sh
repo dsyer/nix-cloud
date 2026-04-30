@@ -18,6 +18,11 @@ do
     sleep 1
 done
 
-rsync -e 'ssh -o StrictHostKeyChecking=no -i ~/.ssh/google_compute_engine' --filter=':- .gitignore' -a -P . $remote:~/nix-cloud
+# Use git to rsync the files, which works more reliably on windows
+ssh -o StrictHostKeyChecking=no -i ~/.ssh/google_compute_engine $remote dnf -y install git
+ssh -o StrictHostKeyChecking=no -i ~/.ssh/google_compute_engine $remote 'mkdir -p ~/nix-cloud && cd ~/nix-cloud && git init'
+git remote add gcp gcp:~/nix-cloud
+git push gcp main --force
+ssh -o StrictHostKeyChecking=no -i ~/.ssh/google_compute_engine $remote 'cd nix-cloud && git checkout main'
 
-ssh -o StrictHostKeyChecking=no -i ~/.ssh/google_compute_engine $remote ~/nix-cloud/scripts/init.sh
+ssh -o StrictHostKeyChecking=no -i ~/.ssh/google_compute_engine $remote nix-cloud/scripts/init.sh

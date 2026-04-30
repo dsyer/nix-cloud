@@ -23,7 +23,7 @@ resource "google_compute_instance" "default" {
   }
   boot_disk {
     initialize_params {
-      image = "projects/labsintercon-labsimages/global/images/labs-saas-gcp-centos9-stream-packer-20260323"
+      image = "projects/labsintercon-labsimages/global/images/labs-saas-gcp-centos9-stream-packer-latest"
       size = 100
     }
   }
@@ -37,7 +37,7 @@ resource "google_compute_instance" "default" {
   }
 
   provisioner "local-exec" {
-    command = "scripts/bootstrap.sh ${vars.user}@${google_compute_instance.default.network_interface.0.network_ip}"
+    command = "./scripts/bootstrap.sh ${var.user}@${google_compute_instance.default.network_interface.0.network_ip}"
   }
 
 }

@@ -6,7 +6,7 @@ You need to:
 
 - get `terraform` and `gcloud` (or `nix-shell` so you can install it)
 - authenticate with `gcloud` (`gcloud auth application-default login`) and set up a project if you don't have one
-- create an SSH identity file (RSA private key) `~/.ssh/id_rsa` if you don't have one
+- create an SSH identity file (RSA private key) `~/.ssh/google_compute` if you don't have one
 
 ## Create a VM and Log in
 
