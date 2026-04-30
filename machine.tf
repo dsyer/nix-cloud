@@ -33,11 +33,11 @@ resource "google_compute_instance" "default" {
     # attaches to the named network resources rather than the implicit default.
     network    = "projects/ltnz001-saas-vpc/global/networks/ltnz001-vpc"
     subnetwork = "projects/ltnz001-saas-vpc/regions/us-west1/subnetworks/ltnz001-spring-releng-usw1"
-    network_ip = "10.31.185.142"
   }
 
   provisioner "local-exec" {
-    command = "./scripts/bootstrap.sh ${var.user}@${google_compute_instance.default.network_interface.0.network_ip}"
+    command = "./scripts/bootstrap.sh ${var.user} ${google_compute_instance.default.network_interface.0.network_ip}"
+    interpreter = ["bash", "-c"]
   }
 
 }

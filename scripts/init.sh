@@ -2,7 +2,7 @@
 
 if ! which docker 2> /dev/null; then
     sudo dnf config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
-    sudo dnf -y install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin zip git time
+    sudo dnf -y install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin zip git time sysstat
     sudo systemctl enable --now docker
     sudo usermod -aG docker $USER
 fi
