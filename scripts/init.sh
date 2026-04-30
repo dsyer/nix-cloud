@@ -1,8 +1,9 @@
 #!/bin/bash
 
 if ! which docker 2> /dev/null; then
-    sudo apt-get update
-    sudo apt-get install -yq docker.io
+    sudo dnf config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
+    sudo dnf -y install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin zip git time
+    sudo systemctl enable --now docker
     sudo usermod -aG docker $USER
 fi
 

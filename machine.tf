@@ -17,30 +17,33 @@ resource "random_id" "instance_id" {
 resource "google_compute_instance" "default" {
   name         = "test-${random_id.instance_id.hex}"
   machine_type = "c3-standard-8"
-  zone         = "europe-west2-c"
-
+  zone         = "us-west1-a"
+  metadata = {
+    ssh-keys = "${var.user}:${file("~/.ssh/google_compute_engine.pub")}"
+  }
   boot_disk {
     initialize_params {
-      image = "ubuntu-os-cloud/ubuntu-2204-lts"
+      image = "projects/labsintercon-labsimages/global/images/labs-saas-gcp-centos9-stream-packer-20260323"
       size = 100
     }
   }
 
   network_interface {
-    network = "default"
-
-    access_config {
-      // Ephemeral IP
-    }
+    # Use the existing network and subnetwork (by self_link) so the instance
+    # attaches to the named network resources rather than the implicit default.
+    network    = "projects/ltnz001-saas-vpc/global/networks/ltnz001-vpc"
+    subnetwork = "projects/ltnz001-saas-vpc/regions/us-west1/subnetworks/ltnz001-spring-releng-usw1"
+    network_ip = "10.31.185.142"
   }
 
   provisioner "local-exec" {
-    command = "scripts/bootstrap.sh ${google_compute_instance.default.network_interface.0.access_config.0.nat_ip}"
+    command = "scripts/bootstrap.sh ${vars.user}@${google_compute_instance.default.network_interface.0.network_ip}"
   }
+
 }
 
 output "instance_ip" {
-    value = "${google_compute_instance.default.network_interface.0.access_config.0.nat_ip}"
+    value = "${google_compute_instance.default.network_interface.0.network_ip}"
 }
 
 output "instance_name" {

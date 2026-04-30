@@ -3,7 +3,7 @@
 set -e
 
 if [ $# -lt 1 ]; then
-    echo "Usage $0 <hostname-or-ip>"
+    echo "Usage $0 (user@)<hostname-or-ip>"
     exit 1
 fi
 
@@ -17,7 +17,6 @@ do
     ((c++)) && ((c==10)) && break
     sleep 1
 done
-ssh -o StrictHostKeyChecking=no -i ~/.ssh/google_compute_engine $remote test -e ~/.ssh/id_rsa || scp -i ~/.ssh/google_compute_engine -o StrictHostKeyChecking=no ~/.ssh/id_rsa ~/.ssh/id_rsa.pub $remote:~/.ssh
 
 rsync -e 'ssh -o StrictHostKeyChecking=no -i ~/.ssh/google_compute_engine' --filter=':- .gitignore' -a -P . $remote:~/nix-cloud
 
