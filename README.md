@@ -6,7 +6,7 @@ You need to:
 
 - get `terraform` and `gcloud` (or `nix-shell` so you can install it)
 - authenticate with `gcloud` (`gcloud auth application-default login`) and set up a project if you don't have one
-- create an SSH identity file (RSA private key) `~/.ssh/google_compute_engine` if you don't have one
+- create an SSH identity file (RSA private key) `~/.ssh/google_compute` if you don't have one
 
 ## Create a VM and Log in
 
@@ -28,8 +28,8 @@ Terraform v0.12.23
 Create a `terraform.tfvars` and put in your project id and user id. E.g.
 
 ```
-project = "cf-sandbox-dsyer"
-user = "dsyer"
+project = "ltnz001-spring-releng"
+user = "david_syer"
 ```
 
 Initialize and make sure the configuration is clean (maybe first `rm -rf .terraform* terraform.tfstate*` if you have some old state lying around):
@@ -57,8 +57,8 @@ You can verify with `gcloud` that the instance is running, and then SSH in:
 $ gcloud compute instances list
 NAME                 ZONE            MACHINE_TYPE                 PREEMPTIBLE  INTERNAL_IP  EXTERNAL_IP   STATUS
 test-719c6...        europe-west2-c  n1-standard-1                             10.154.0.8   35.197.203.4  RUNNING
-$ ssh -i ~/.ssh/google_compute_engine $(terraform output instance_ip | sed -e 's/"//g')
-dsyer@test:~$
+$ ssh $(terraform output instance_ip | sed -e 's/"//g')
+david_syer@test:~$
 ```
 
 ## Tear Down
@@ -66,7 +66,7 @@ dsyer@test:~$
 Unfortunately you can't use Terraform to [stop an instance](https://github.com/terraform-providers/terraform-provider-aws/issues/22) so you have to go to `gcloud` to do that:
 
 ```
-$ gcloud compute instances stop --zone europe-west2-c `terraform output instance_name`
+$ gcloud compute instances stop --zone us-west1-c `terraform output instance_name`
 Stopping instance(s) test...
 ```
 
