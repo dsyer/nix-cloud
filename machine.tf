@@ -23,7 +23,7 @@ resource "google_compute_instance" "default" {
   }
   boot_disk {
     initialize_params {
-      image = "ubuntu-os-cloud/ubuntu-2204-lts"
+      image = "projects/labsintercon-labsimages/global/images/labs-saas-gcp-ubuntu24-packer-latest"
       size = 100
     }
   }
